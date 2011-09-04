@@ -5,7 +5,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link href="prettify/prettify.css" type="text/css" rel="stylesheet" />
 
-		<title>Das Node Anfängerhandbuch » Eine umfassende Einführung in node.js</title>
+		<title>Das Node Einsteigerhandbuch » Eine umfassende Einführung in node.js</title>
 		<meta name="description" content="A comprehensive Node.js tutorial for beginners: Learn how to build a full blown web application with server-side JavaScript" />
 
 		<style type="text/css">
@@ -404,6 +404,10 @@
 		</div>
 
 		<div id="translations">
+			<a href="index-de.html">
+				<div class="flag"><img src="de-flag.png" width="24" height="24" alt="german flag" /></div>
+				<div class="text">Dieses Tutorial auf deutsch</div>
+			</a>
 			<a href="index-es.html">
 				<div class="flag"><img src="es-flag.png" width="24" height="24" alt="spanish flag" /></div>
 				<div class="text">Lee este tutorial en Español</div>
@@ -416,7 +420,7 @@
 
 		<div id="buy-the-ebook">
 			<div class="headline">
-				Buy the ultimate Node.js bundle!
+				Kaufen Sie das ultimative Node.js Buch-Paket!
 			</div>
 			<div class="cover">
 				<a href="/buy-bundle/"><img src="the_node_beginner_book_cover.png" height="86" width="57" /></a>
@@ -425,13 +429,13 @@
 			<div class="description">
 				<ul>
 					<li>
-						Introduction plus reference in one bundle
+						Einführung und Referenz in einem Paket
 					</li>
 					<li>
-						226 pages in total - PDF, ePub & MOBI
+						226 Seiten - PDF, ePub & MOBI
 					</li>
 					<li>
-						Direct download - <strong>free updates</strong>
+						Direktdownload - <strong>kostenlose Updates</strong>
 					</li>
 				</ul>
 			</div>
@@ -443,257 +447,167 @@
 			</div>
 			<div class="buy">
 				<a class="buttonlink" href="/buy-bundle/">
-					<div class="button">Buy now!</div>
+					<div class="button">Jetzt kaufen!</div>
 				</a>
 			</div>
 		</div>
 
 		<div id="book">
-			<h1>The Node Beginner Book</h1>
-			<div id="author">A Node.js tutorial by <a href="http://twitter.com/manuelkiessling">Manuel Kiessling</a></div>
+			<h1>Das Node Einsteigerhandbuch</h1>
+			<div id="author">Ein Node.js Tutorial von <a href="http://twitter.com/manuelkiessling">Manuel Kiessling</a> (ins Deutsche übersetzt vom <a href="http://buro71a.de/" title="Werbeagentur Büro 71a aus Würzburg">Büro 71a</a>)</div>
 
-			<h2>About</h2>
+			<h2>Über dieses Buch</h2>
 
 			<p>
-				The aim of this document is to get you started with developing
-				applications for Node.js, teaching you everything you need to
-				know about "advanced" JavaScript along the way. It goes way
-				beyond your typical "Hello World" tutorial.
+				Das Ziel dieses Buchs ist es, Ihnen den Einstieg in die Entwicklung von Anwendungen für Node.js zu vermitteln. Sie lernen alles was Sie für "anspruchsvolleres" JavaScript benötigen, während der Beispiele. Dieses Buch geht weit über das typische "Hallo Welt" Tutorial hinaus!
 			</p>
 
 			<h3>Status</h3>
 			<p>
-				You are reading the final version of this book, i.e., updates
-				are only done to correct errors or to reflect changes in new
-				versions of Node.js.
+				Sie lesen hier die finale Version dieses Buchs. Das heißt, es wird ausschließlich Updates geben, um Fehler zu korrigieren oder um Änderungen in node.js Rechnung zu tragen.
 			</p>
 			<p>
-				The code samples in this book are tested to work with Node.js
-				version 0.4.9.
+				Die Codebeispiele in diesem wurden mit Node.js Version 0.4.9 getestet.
 			</p>
 
-			<h3>Intended audience</h3>
+			<h3>Zielgruppe</h3>
 			<p>
-				This document will probably fit best for readers that have a
-				background similar to my own: experienced with at least one
-				object-oriented language like Ruby, Python, PHP or Java, only little
-				experience with JavaScript, and completely new to Node.js.
+				
+				Dieses Dokument ist am passendesten für diejenigen Leser, die einen ähnlichen Hintergrund haben, wie ich: Erfahrung mit mindestens einer objektorientierten Sprache wie Ruby, Python, PHP oder Java, nur wenig Erfahrung mit JavaScript und völlig ahnungslose in Sachen Node.js.
 			</p>
 			<p>
-				Aiming at developers that already have experience with other
-				programming languages means that this document won't cover
-				really basic stuff like data types, variables, control structures
-				and the likes. You already need to know about these to understand
-				this document.
+				Mit "Entwicklern, die bereits Erfahrung mit anderen Programmiersprachen haben" bedeutet, dass dieses Dokument nicht auf wirklich grundlegende Dinge wie Datentypen, Variablen, Kontrollstrukturen und Ähnliches eingeht. Diese Dinge sollten Ihnen bestens vertraut sein, um dieses Buch zu verstehen.
 			</p>
 			<p>
-				However, because functions and objects in JavaScript are different
-				from their counterparts in most other languages, these will be
-				explained in more detail.
+				Nichtsdestoweniger werden Funktionen und Objekte in JavaScript etwas detaillierter besprochen, da sie sich von Funktionen und Objekten anderer Programmiersprachen unterscheiden.
 			</p>
 
-			<h3>Structure of this document</h3>
+			<h3>Aufbau dieses Buchs</h3>
 			<p>
-				Upon finishing this document, you will have created a complete web
-				application which allows the users of this application to view web
-				pages and upload files.
+				Wenn Sie dieses Dokument vollständig gelesen haben, haben Sie eine komplette Webanwendung mit Node.js erstellt, mit der Benutzer Webseiten ansehen und Dateien hochladen können.
 			</p>
 			<p>
-				Which, of course, is not exactly
-				world-changing, but we will go some extra miles and not only create
-				the code that is "just enough" to make these use cases possible,
-				but create a simple, yet complete framework to cleanly separate the
-				different aspects of our application. You will see what I mean in a
-				minute.
+				Das ist, zugegeben, nichts wirklich Neues, aber wir werden mit ein paar zusätzlichen Umwegen nicht nur den "gerade notwendigen" Code der Anwendung schreiben, sondern ein kleines aber feines Framework schreiben, welches die verschiedenen Teilbereiche unserer Anwendung sauber trennt. Was ich damit meine, werden Sie in den nächsten Zeilen erfahren.
 			</p>
 			<p>
-				We will start with looking at how JavaScript development in Node.js
-				is different from JavaScript development in a browser.
+				Wir bekommen unsere Reise mit einem Überblich über die Unterschiede von Node.js im Vergleich zu JavaScript Entwicklung im Browser.
 			</p>
 			<p>
-				Next, we will stay with the good old tradition of writing a "Hello
-				World" application, which is a most basic Node.js application that
-				"does" something.
+				Zunächst aber wollen wir einer guten, alten Tradition nachkommen - wir schreiben eine "Hallo Welt" Anwendung, was die wohl einfachste Node.js Anwendung sein dürfte, die überhaupt Arbeit verrichtet.
 			</p>
 			<p>
-				Then, we will discuss what kind of "real" application we want to
-				build, dissect the different parts which need to be implemented to
-				assemble this application, and start working on each of these parts
-				step-by-step.
+				Anschließend werden wir uns näher mit der "echten" Anwendung beschäftigen, die wir in diesem Buch schreiben wollen. Wir unterteilen die einzelnen Teilbereiche, die zum Betrieb der Anwendung nötig sind und schauen uns jeden Teilbereich Schritt für Schritt detailliert an.
 			</p>
 			<p>
-				As promised, along the way we will learn about some of the more
-				advanced concepts of JavaScript, how to make use of them, and
-				look at why it makes sense to use these concepts instead of
-				those we know from other programming languages.
+				Wie versprochen werden wir auf dieser Reise durch Node.js auch einige fortgeschrittene Konzepte in Sachen JavaScript kennenlernen. Wir erfahren, wie sich diese Konzepte anwenden lassen und warum wir diese und nicht die aus anderen Programmiersprachen bekannten Konzepte anwenden sollten.
 			</p>
 			<p>
-				The source code of the finished application is available through
-				<a href="https://github.com/ManuelKiessling/NodeBeginnerBook/tree/master/code/application">the NodeBeginnerBook Github repository</a>.
+				Der fertige Quelltext der Anwendung findet sich im <a href="https://github.com/ManuelKiessling/NodeBeginnerBook/tree/master/code/application">Github Repository</a>.
 			</p>
 
-			<div id="table-of-contents-headline">Table of contents</div>
+			<div id="table-of-contents-headline">Inhaltsverzeichnis</div>
 			<div id="table-of-contents"></div>
 
-			<h2>JavaScript and Node.js</h2>
+			<h2>JavaScript und Node.js</h2>
 
-			<h3>JavaScript and You</h3>
+			<h3>JavaScript und Du</h3>
 			<p>
-				Before we talk about all the technical stuff, let's take a
-				moment and talk about you and your relationship with
-				JavaScript. This chapter is here to allow you to estimate
-				if reading this document any further makes sense for you.
+				Bevor wir über die Technik sprechen, nehmen wir uns einen Moment und sprechen über Sie und Ihre Beziehung zu Javascript. Dieses Kapitel gibt Ihnen die Möglichkeit, einzuschätzen, ob sich das Lesen dieses Buchs für Sie überhaupt rentiert.
 			</p>
 			<p>
-				If you are like me, you started with HTML "development"
-				long ago, by writing HTML documents. You came along this
-				funny thing called JavaScript, but you only used it in a
-				very basic way, adding interactivity to your web pages
-				every now and then.
+				Wenn Sie wie ich sind, haben Sie vor sehr langer Zeit bereits  mit HTML "Entwicklung" angefangen. Sie sind irgendwann über dieses komische Ding "JavaScript" gestolpert, aber Sie haben es nie wirklich richtig eingesetzt und nur hier und da ein bisschen Spielerei in Ihre Websites eingebaut.
 			</p>
 			<p>
-				What you really wanted was "the real thing", you wanted to
-				know how to build complex web sites - you learned a
-				programming language like PHP, Ruby, Java, and started
-				writing "backend" code.
+				Was Sie wirklich wollten, war das "echte Zeug". Sie haben gelernt, komplexe Website mit richtigen Programmiersprachen wie PHP, Ruby oder Java zu bauen und haben angefangen, "Backend" Code zu schreiben.
 			</p>
 			<p>
-				Nevertheless, you kept an eye on JavaScript, you saw that
-				with the introduction of jQuery, Prototype and the likes,
-				things got more advanced in JavaScript land, and that this
-				language really was about more than <em>window.open()</em>.
+				Trotzdem haben Sie immer ein Auge auf JavaScript geworfen. Sie haben mit der Einführung von jQuery oder Prototype und wie sie nicht alle heißen gesehen, dass JavaScript erwachsener wurde und dass man mit JavaScript wohl mehr machen kann, als nur <em>window.open()</em>.
 			</p>
 			<p>
-				However, this was all still frontend stuff, and although it
-				was nice to have jQuery at your disposal whenever you felt
-				like spicing up a web page, at the end of the day you were,
-				at best, a JavaScript <em>user</em>, but not a JavaScript
-				<em>developer</em>.
+				Wie dem auch sei, das war alles nur "Frontend" Zeug und obwohl es nett ist, jQuery zur Seite zu haben, wenn man Websites ein bisschen aufpeppen wollte, waren Sie am Ende doch nur JavaScript <em>Benutzer</em>, aber nicht wirklich ein JavaScript <em>Entwickler</em>.
 			</p>
 			<p>
-				And then came Node.js. JavaScript on the server, how cool
-				is that?
+				Und dann kam Node.js. Serverbasiertes JavaScript - wie cool ist das denn bitte?
 			</p>
 			<p>
-				You decided that it's about time to check out the old, new
-				JavaScript. But wait, writing Node.js applications is the
-				one thing; understanding why they need to be written the
-				way they are written means - understanding JavaScript.
-				And this time for real.
+				Sie haben sich also dazu entschlossen, sich das neue alte doch nochmal unter die Lupe zu nehmen. Aber Moment: Node.js Anwendungen zu schreiben, ist eine Sache; eine andere ist es, zu verstehen, warum sie so geschrieben werden, wie man sie schreibt. Das heißt JavaScript verstehen - und zwar diesmal <em>wirklich</em>.
 			</p>
 			<p>
-				Here is the problem: Because JavaScript really lives two,
-				maybe even three lives (the funny little DHMTL helper from
-				the mid-90's, the more serious frontend stuff like jQuery
-				and the likes, and now server-side), it's not that easy to
-				find information that helps you to learn JavaScript the
-				"right" way, in order to write Node.js applications in a
-				fashion that makes you feel you are not just using
-				JavaScript, you are actually developing it.
+				Hier ist das Problem: Weil JavaScript mindestens zwei, meistens aber mehr Gesichter hat (der lustige kleine DHTML-Helfer Mitte der 90er, etwas ernsthafterer Frontend-Kram wie jQuery und dergleichen, und jetzt server-seitig), ist es nicht sehr einfach, Informationen zu finden, die Ihnen helfen, JavaScript auf die "richtige" Art und Weise zu lernen. Gerade in Bezug auf die Entwicklung von Node.js Anwendungen und zwar so, dass Sie nicht das Gefühl haben, JavaScript nur zu benutzen, sondern es wirklich zu entwickeln. 
 			</p>
 			<p>
-				Because that's the catch: you already are an experienced
-				developer, you don't want to learn a new technique by just
-				hacking around and mis-using it; you want to be sure that
-				you are approaching it from the right angle.
+				Denn das ist ja der eigentliche Clue: Sie sind bereits ein erfahrer Entwickler, Sie wollen neue Techniken nicht einfach durch stümperhaftes Rumprobieren lernen; Sie wollen sicher sein, dass Sie es von Grund auf richtig lernen.
 			</p>
 			<p>
-				There is, of course, excellent documentation out there.
-				But documentation alone	sometimes isn't enough. What is
-				needed is guidance.
+				Es gibt natürlich jede Menge hervorragende Dokumentation da draußen, aber Dokumentation alleine ist manchmal eben einfach nicht genug. Was man braucht ist eine führende Hand.
 			</p>
 			<p>
-				My goal is to provide a guide for you.
+				Mein Ziel ist, Sie zu führen.
 			</p>
 
-			<h3>A word of warning</h3>
+			<h3>Eine Warnung vorweg</h3>
 			<p>
-				There are some really excellent JavaScript people out
-				there. I'm not one of them.
+				Da draußen gibt es eine Menge wirklich hervorragender JavaScript-Menschen. Ich bin keiner davon!
 			</p>
 			<p>
-				I'm really just the guy I talked about in the previous
-				paragraph. I know a thing or two about developing backend
-				web applications, but I'm still new to "real" JavaScript
-				and	still new to Node.js. I learned some of the more
-				advanced aspects of	JavaScript just recently.
-				I'm not experienced.
+				Ich bin wirklich nur der Typ, über den ich vorhin gesprochen habe. Ich weiß ein bisschen was über die Backend-Entwicklung von Webanwendungen, aber ich bin ein Anfänger, was "echtes" JavaScript angeht und sowieso komplett unbedarft in Sachen Node.js. Ich habe mir erst vor Kurzem einige fortgeschrittene Kentnisse in JavaScript angeeignet. Ich bin also nicht sehr erfahren.
 			</p>
 			<p>
-				Which is why this is no "from novice to expert" book. It's
-				more like "from novice to advanced novice".
+				Deswegen handelt es sich hierbei auch nicht um ein "Vom Einsteiger zum Profi" Buch. Es ist eher ein "Vom Anfänger zum fortgeschrittenen Anfänger" Buch.
 			</p>
 			<p>
-				If I don't fail, then this will be the kind of
-				document I wish I had when starting with Node.js.
+				Wenn ich es nicht vergeigt habe, wird das hier die Art von Buch werden, die ich mir gewünscht hätte, als ich mit Node.js angefangen habe.
 			</p>
 
-			<h3>Server-side JavaScript</h3>
+			<h3>Serverseitiges JavaScript</h3>
 			<p>
-				The first incarnations of JavaScript lived in browsers.
-				But this is just the context. It defines what you can
-				do with the language, but it doesn't say much about what
-				the language itself can do. JavaScript is a "complete"
-				language: you can use it in many contexts and achieve
-				everything with it you can achieve with any other
-				"complete" language.
+				Die erste Form von JavaScript existierte in den Browsern.
+				Aber das ist nur der Kontext. Es beschreibt ganz gut, was Sie mit der Sprache anfangen können, aber es sagt wenig darüber aus, was die Sprache an sich zu leisten im Stande ist. 
+				
+				JavaScript ist eine "vollständige" Sprache: Sie können sie in unterschiedlichen Bereichen anwenden und Sie können damit alles realisieren, was Sie auch mit anderen "vollständigen" Sprache machen können.
 			</p>
 			<p>
-				Node.js really is just another context: it allows you to run
-				JavaScript code in the backend, outside a browser.
+				Node.js macht da keine Ausnahme: Es erlaubt Ihnen, JavaScript im "Backend", also außerhalb des Browsers, auszuführen.
 			</p>
 			<p>
-				In order to execute the JavaScript you intend to run in the
-				backend, it needs to be interpreted and, well, executed.
-				This is what Node.js does, by making use of Google's V8 VM, the
-				same runtime environment for JavaScript that Google
-				Chrome uses.
+				Um das JavaScript auszuführen, was Sie im "Backend" schreiben, muss dieses interpretiert und - natürlich - ausgeführt werden.
+				Das genau macht Node.js, indem es die Googles V8 VM benutzt, die gleiche Laufzeit-Umgebung für JavaScript, die Google Chrome verwendet.
 			</p>
 			<p>
-				Plus, Node.js ships with a lot of useful modules, so you don't
-				have to write everything from scratch, like for example
-				something that outputs a string on the console.
+				Zusätzlich kommt Node.js mit jede Menge nützlicher Module, damit Sie das Rad nicht ständig neu erfinden müssen - wie zum Beispiel eine Zeichenfolge auf der Konsole ausgeben.
 			</p>
 			<p>
-				Thus, Node.js is really two things: a runtime environment and a
-				library.
+				Aus diesem Grund ist Node.js zwei Dinge gleichzeitig: eine Laufzeit-Umgebung und eine Script-Bibliothek.
 			</p>
 			<p>
-				In order to make use of these, you need to install Node.js.
-				Instead of repeating the process here, I kindly ask you to
-				visit
+				Damit Sie damit auch arbeiten können, müssen Sie Node.js zuerst installieren.
+				Bevor ich hier zum x-ten Mal diesen Vorgang beschreibe, möchte ich lieber auf folgende 
 				<a href="https://github.com/joyent/node/wiki/Installation"
-				   title="Building and Installing Node.js">the official
-				installation instructions</a>. Please come back once you
-				are up and running.
+				   title="Building and Installing Node.js">Installationsanweisung</a> verweisen. Wenn Sie fertig sind und alles läuft, kommen Sie einfach wieder her.
 			</p>
 
-			<h3>"Hello World"</h3>
+			<h3>"Hallo Welt"</h3>
 			<p>
-				Ok, let's just jump in the cold water and write our first
-				Node.js application: "Hello World".
+				Na dann auf ins kalte Wasser. Schreiben wir unsere erste Node.js Anwendung: "Hallo Welt".
 			</p>
 			<p>
-				Open your favorite editor and create a file called
-				<em>helloworld.js</em>. We want it to write "Hello World"
-				to STDOUT, and here is the code needed to do that:
+				Öffnen Sie Ihren Lieblingstexteditor und erstellen Sie eine neue Datei namens <em>hallowelt.js</em>. Wir möchten, dass dieses Script "Hallo Welt" auf dem STDOUT ausgibt und hier ist der dafür benötigte Code:
 			</p>
-<pre class="prettyprint lang-js">console.log("Hello World");
+<pre class="prettyprint lang-js">console.log("Hallo Welt");
 </pre>
 			<p>
-				Save the file, and execute it through Node.js:
+				Speichern Sie die Datei und führen Sie sie mit Node.js aus:
 			</p>
-<pre>node helloworld.js</pre>
+<pre>node hallowelt.js</pre>
 			<p>
-				This should output <em>Hello World</em> on your terminal.
+				Das sollte im Terminal <em>Hallo Welt</em> ausgeben.
 			</p>
 			<p>
-				Ok, this stuff is boring, right? Let's write some real
-				stuff.
+				Okay - das ist langweilig, oder? Schreiben wir mal was Ordentliches.
 			</p>
 
 
-			<h2>A full blown web application with Node.js</h2>
+			<h2>Eine richtig dicke Webanwendung mit Node.js</h2>
 
 			<h3>The use cases</h3>
 			<p>
