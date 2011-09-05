@@ -736,13 +736,13 @@ server.listen(8888);</pre>
 				Das startet unseres HTTP Server auf Port 8888, macht sonst aber gar nichts (nicht mal auf ankommende Anfragen antworten).
 			</p>
 			<p>
-				Das wirklich Interessante aber (und, wenn Sie sich mit einer etwas konservativeres Sprache wie PHP auskennen, vielleicht auch ungewöhnliche) ist, dass wir eine Funktion genau da definieren, wo Sie eigentlich einen Parameter des <em>createServer()</em> Aufrufs erwarten würden.
+				Das wirklich Interessante aber (und, wenn Sie sich mit einer etwas konservativeres Sprache wie PHP auskennen, vielleicht auch ungewöhnliche) ist, dass wir eine Funktion genau da definieren, wo Sie eigentlich ein Argument des <em>createServer()</em> Aufrufs erwarten würden.
 			</p>
 			<p>
-				Es zeigt sich also, dass genau diese Funktion wirklich der einzige Parameter IST, den wir dem <em>createServer()</em> Aufruf übergeben. Denn in JavaScript können wir Funktionen genauso übergeben, wie jeden anderen Wert.
+				Es zeigt sich also, dass genau diese Funktion wirklich das einzige Argument IST, den wir dem <em>createServer()</em> Aufruf übergeben. Denn in JavaScript können wir Funktionen genauso übergeben, wie jeden anderen Wert.
 			</p>
 
-			<h3>Funktionen als Parameter übergeben</h3>
+			<h3>Funktionen als Argumente übergeben</h3>
 			<p>
 				Sie können beispielsweise so etwas wie das hier machen:
 			</p>
@@ -756,112 +756,87 @@ function ausfuehren(eineFunktion, wert) {
 
 ausfuehren(sprich, "Hallo Welt");</pre>
 			<p>
-				Bitte mal aufmerksam lesen! Was wir hier tun ist Folgendes: Wir übergeben <strong>die Funktion</strong> <em>sprich</em> als ersten Parameter an die Funktion <em>ausfuehren</em>. Wir übergeben <strong>nicht</strong> den Rückgabewert dieser Funktion, sonder die Funktion <em>sprich</em> selbst!
+				Bitte mal aufmerksam lesen! Was wir hier tun ist Folgendes: Wir übergeben <strong>die Funktion</strong> <em>sprich</em> als erstes Argument an die Funktion <em>ausfuehren</em>. Wir übergeben <strong>nicht</strong> den Rückgabewert dieser Funktion, sonder die Funktion <em>sprich</em> selbst!
 			</p>
 			<p>
 				Somit wird die Funktion <em>sprich</em> die lokale Variable <em>eineFunktion</em> innerhalb der Funktion <em>ausfuehren</em>. Nun kann <em>ausfuehren</em> diese Funktion über diese Variable direkt aufrufen <em>eineFunktion()</em> (einfach durch Hinzufügen der Klammern).
 			</p>
 			<p>
-				Natürlich kann <em>ausfuehren</em> die für <em>sprich</em> notwendigen Parameter ebenfalls an <em>eineFunktion()</em> übergeben.
+				Natürlich kann <em>ausfuehren</em> die für <em>sprich</em> notwendigen Argumente ebenfalls an <em>eineFunktion()</em> übergeben.
 			</p>
 			<p>
-				Wir können also, genau wie wir es gerade getan haben, Funktionen an andere Funktionen über ihren Namen als Parameter übergeben. Aber wir müssen diese Funktionen gar nicht unbedingt vorher schon definieren - wir können während des Aufrufs selbst Funktionen definieren und an andere Funktionen übergeben:
+				Wir können also, genau wie wir es gerade getan haben, Funktionen an andere Funktionen über ihren Namen als Argument übergeben. Aber wir müssen diese Funktionen gar nicht unbedingt vorher schon definieren - wir können während des Aufrufs selbst Funktionen definieren und an andere Funktionen übergeben:
 			</p>
-<pre class="prettyprint lang-js">function ausfuerhen(eineFunktion, wert) {
+<pre class="prettyprint lang-js">function ausfuehren(eineFunktion, wert) {
   eineFunktion(wert);
 }
 
 ausfuehren(function(wort){ console.log(wort) }, "Hallo Welt");
 </pre>
 			<p>
-				We define the function we want to pass to <em>execute</em>
-				right there at the place where <em>execute</em> expects its
-				first parameter.
+				Wir definieren die Funktion, die wir <em>ausfuehren</em> übergeben möchten, direkt hier an Ort und Stelle, wo <em>ausfuehren</em> sein erstes Argument erwartet.
 			</p>
 			<p>
-				This way, we don't even need to give the function a name,
-				which is why this is called an <em>anonymous function</em>.
+				Da wir der Funktion auf diese Weise nicht mal mehr einen eigenen Namen geben müssen, nennt man diese Funktionen auch <em>anonyme Funktionen</em>.
 			</p>
 			<p>
-				This is a first glimpse at what I like to call "advanced"
-				JavaScript, but let's take it step by step. For now, let's
-				just accept that in JavaScript, we can pass a function as
-				a parameter when calling another function. We can do this
-				by assigning our function to a variable, which we then
-				pass, or by defining the function to pass in-place.
+				Das genau ist schon ein kleiner Ausblick darauf, was ich unter "fortgeschrittenem" JavaScript verstehe. Aber eins nach dem anderen. Für den Moment geben wir uns erstmal damit zufrieden, dass man in JavaScript Funktionen als Argumente an andere Funktionen übergeben kann. Und natürlich, dass man diese Funktionen vorher gar nicht explizit definieren muss.
 			</p>
 
-			<h3>How function passing makes our HTTP server work</h3>
+			<h3>Wie das Übergeben von Funktionen unserem HTTP Server Leben einhaucht</h3>
 			<p>
-				With this knowledge, let's get back to our minimalistic
-				HTTP server:
+				Mit dem Wissen bisher kommen wir mal zurück zu unserem - zugegebenermaßen minimalistischen - HTTP-Server:
 			</p>
 <pre class="prettyprint lang-js">var http = require("http");
 
 http.createServer(function(request, response) {
   response.writeHead(200, {"Content-Type": "text/plain"});
-  response.write("Hello World");
+  response.write("Hallo Welt");
   response.end();
 }).listen(8888);
 </pre>
 			<p>
-				By now it should be clear what we are actually doing here:
-				we pass the <em>createServer</em> function an anonymous
-				function.
+				Bis hierher sollte eigentlich klar sein, was wir hier tun:
+				wir übergeben der <em>createServer</em> Funktion eine anonyme Funktion.
 			</p>
 			<p>
-				We could achieve the same by refactoring our code to:
+				Wir können das gleiche mit folgendem, überarbeiteten Code erreichen:
 			</p>
 <pre class="prettyprint lang-js">var http = require("http");
 
 function onRequest(request, response) {
   response.writeHead(200, {"Content-Type": "text/plain"});
-  response.write("Hello World");
+  response.write("Hallo Welt");
   response.end();
 }
 
 http.createServer(onRequest).listen(8888);
 </pre>
 			<p>
-				Maybe now is a good moment to ask: Why are we doing it
-				that way?
+				Vielleicht ist jetzt ein guter Moment zu fragen: Warum machen wir es eigentlich auf diese Weise?
 			</p>
 
-			<h3>Event-driven callbacks</h3>
+			<h3>Ereignisbasierte Callbacks</h3>
 			<p>
-				The answer is a) not that easy to give (at least for me), and
-				b) lies in the very nature of how Node.js works. It's
-				event-driven, which is the reason why it's so fast.
+				Die Antwort ist a) so einfach nicht zu geben (zumindest nicht für mich), und b) liegt sie in der Natur dessen, wie Node.js arbeitet. Es arbeitet nämlich ereignisbasiert und das ist der Grund, warum es so verdammt schnell ist.
 			</p>
 			<p>
-				You might want to take the time to read Felix
-				Geisend&ouml;rfer's excellent post
-				<a href="http://debuggable.com/posts/understanding-node-js:4bd98440-45e4-4a9a-8ef7-0f7ecbdd56cb">Understanding node.js</a>
-				for some background explanation.
+				Es wäre vielleicht nicht schlecht, Felix
+				Geisend&ouml;rfer's wirklich guten Beitrag
+				<a href="http://debuggable.com/posts/understanding-node-js:4bd98440-45e4-4a9a-8ef7-0f7ecbdd56cb">Understanding node.js (englisch)</a> für ein bisschen Hintergrundwissen zu lesen.
 			</p>
 			<p>
-				It all boils down to the fact that Node.js works event-driven.
-				Oh and yes, I, too, don't know exactly what that means.
-				But I will try and explain, why this makes sense for us
-				who want to write web based applications in Node.js.
+				Es läuft alles auf die Tatsache hinaus, dass Node.js ereignisgesteuert funktioniert. Oh, und ja, auch ich weiß nicht genau, was das bedeutet.
+				Aber ich werde versuchen zu erklären, warum das für uns Sinn macht, die wir Web-basierte Anwendungen in Node.js. schreiben wollen.
 			</p>
 			<p>
-				When we call the <em>http.createServer</em> method, we
-				of course not only want to have a server listening at
-				some port, we also want to do something when there is an
-				HTTP request to this server.
+				Wenn wir die <em>http.createServer</em> Methode aufrufen, wollen wir natürlich nicht einfach nur einen Server betreiben, der zuhören kann, es soll auch etwas passieren, wenn eine Anfrage unseren Server trifft.
 			</p>
 			<p>
-				The problem is, this happens asynchronously: it happens
-				at any given time, but we only have a single process in
-				which our server runs.
+				Das Problem aber ist, das passiert leider asynchron: es kann also jederzeit passieren, aber wir haben nur einen einzigen Prozess in dem unser Server läuft.
 			</p>
 			<p>
-				When writing PHP applications, we aren't bothered by this
-				at all: whenever there is an incoming HTTP request, the
-				webserver (usually Apache) forks a new process for just
-				this request, and starts the according PHP script from
-				scratch, which is then executed from top to bottom.
+				Bei PHP Anwendung stört uns das nicht: wann auch immer eine Anfrage an unserem HTTP Server ankommt, erzeugt der Webserver (normalerweise der Apache) einen neuen Prozess für dieses einen Aufruf und startet das entsprechende PHP Skript, welches dann von oben nach unten durchläuft.
 			</p>
 			<p>
 				So in regards of control flow, we are in the midst of our
