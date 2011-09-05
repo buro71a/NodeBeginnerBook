@@ -459,24 +459,24 @@
 			<h2>Über dieses Buch</h2>
 
 			<p>
-				Das Ziel dieses Buchs ist es, Ihnen den Einstieg in die Entwicklung von Anwendungen für Node.js zu vermitteln. Sie lernen alles was Sie für "anspruchsvolleres" JavaScript benötigen, während der Beispiele. Dieses Buch geht weit über das typische "Hallo Welt" Tutorial hinaus!
+				Das Ziel dieses Buchs ist es, Ihnen den Einstieg in die Anwendungsentwicklung mit Node.js zu vermitteln. Sie lernen während der Beispiele alles, was Sie für "anspruchsvolleres" JavaScript benötigen. Dieses Buch geht dabei weit über das typische "Hallo Welt" Tutorial hinaus!
 			</p>
 
 			<h3>Status</h3>
 			<p>
-				Sie lesen hier die finale Version dieses Buchs. Das heißt, es wird ausschließlich Updates geben, um Fehler zu korrigieren oder um Änderungen in node.js Rechnung zu tragen.
+				Sie lesen hier die finale Version dieses Buchs. Das heißt, es wird ausschließlich Updates geben, um Fehler zu korrigieren oder um Änderungen in Node.js Rechnung zu tragen.
 			</p>
 			<p>
-				Die Codebeispiele in diesem wurden mit Node.js Version 0.4.9 getestet.
+				Die Codebeispiele in diesem Buch wurden mit Node.js Version 0.4.9 getestet.
 			</p>
 
 			<h3>Zielgruppe</h3>
 			<p>
 				
-				Dieses Dokument ist am passendesten für diejenigen Leser, die einen ähnlichen Hintergrund haben, wie ich: Erfahrung mit mindestens einer objektorientierten Sprache wie Ruby, Python, PHP oder Java, nur wenig Erfahrung mit JavaScript und völlig ahnungslose in Sachen Node.js.
+				Dieses Buch ist am passendesten für diejenigen Leser, die einen ähnlichen Hintergrund haben wie ich: Erfahrung mit mindestens einer objektorientierten Sprache wie Ruby, Python, PHP oder Java, nur wenig Erfahrung mit JavaScript und völlig ahnungslos in Sachen Node.js.
 			</p>
 			<p>
-				Mit "Entwicklern, die bereits Erfahrung mit anderen Programmiersprachen haben" bedeutet, dass dieses Dokument nicht auf wirklich grundlegende Dinge wie Datentypen, Variablen, Kontrollstrukturen und Ähnliches eingeht. Diese Dinge sollten Ihnen bestens vertraut sein, um dieses Buch zu verstehen.
+				Mit "Entwicklern, die bereits Erfahrung mit anderen Programmiersprachen haben" heißt vor allem, dass dieses Dokument auf wirklich grundlegende Dinge wie Datentypen, Variablen, Kontrollstrukturen und Ähnliches <em>nicht eingeht</em>. Diese Dinge sollten Ihnen bestens vertraut sein, um dieses Buch zu verstehen.
 			</p>
 			<p>
 				Nichtsdestoweniger werden Funktionen und Objekte in JavaScript etwas detaillierter besprochen, da sie sich von Funktionen und Objekten anderer Programmiersprachen unterscheiden.
@@ -512,7 +512,7 @@
 
 			<h3>JavaScript und Du</h3>
 			<p>
-				Bevor wir über die Technik sprechen, nehmen wir uns einen Moment und sprechen über Sie und Ihre Beziehung zu Javascript. Dieses Kapitel gibt Ihnen die Möglichkeit, einzuschätzen, ob sich das Lesen dieses Buchs für Sie überhaupt rentiert.
+				Bevor wir über die Technik sprechen, nehmen wir uns einen Moment Zeit und sprechen über Sie und Ihre Beziehung zu Javascript. Dieses Kapitel gibt Ihnen die Möglichkeit, einzuschätzen, ob sich das Lesen dieses Buchs für Sie überhaupt rentiert.
 			</p>
 			<p>
 				Wenn Sie wie ich sind, haben Sie vor sehr langer Zeit bereits  mit HTML "Entwicklung" angefangen. Sie sind irgendwann über dieses komische Ding "JavaScript" gestolpert, aber Sie haben es nie wirklich richtig eingesetzt und nur hier und da ein bisschen Spielerei in Ihre Websites eingebaut.
@@ -609,172 +609,110 @@
 
 			<h2>Eine richtig dicke Webanwendung mit Node.js</h2>
 
-			<h3>The use cases</h3>
+			<h3>Der Anwendungsfall</h3>
 			<p>
-				Let's keep it simple, but realistic:
+				Machen wir's einfach, aber auch realistisch:
 			</p>
 			<ul>
 				<li>
-					The user should be able to use our application with
-					a web browser
+					Der Benutzer soll unsere Anwendung mit einem Web-Browser bedienen können.
 				</li>
 				<li>
-					The user should see a welcome page when
-					requesting http://<em>domain</em>/start which displays a
-					file upload form
+					Der Benutzer soll eine Startseite sehen, wenn er folgende URL aufruft: http://<em>domain</em>/start. Dort soll ein Upload-Formular erscheinen.
 				</li>
 				<li>
-					By choosing an image file to upload and submitting the
-					form, this image should then be uploaded to
-					http://<em>domain</em>/upload, where it is displayed once
-					the upload is finished
+					Wenn der Benutzer ein Bild zum Upload auswählt und das Formular abschickt, soll das Bild unter http://<em>domain</em>/upload dargestellt werden, sobald der Upload abgeschlossen ist.
 				</li>
 			</ul>
 			<p>
-				Fair enough. Now, you could achieve this goal by googling
-				and hacking together <em>something</em>. But that's not
-				what we want to do here.
+				So weit so gut. Das lässt sich nun bekanntlich damit erreichen, dass wir ein bisschen auf Google suchen und am Ende <em>irgendwas</em> zusammenkopieren. Aber genau das wollen wir ja nicht.
 			</p>
 			<p>
-				Furthermore, we don't want to write only the most basic
-				code to achieve the goal, however elegant and correct this code
-				might be. We will intentionally add more abstraction than
-				necessary in order to get a feeling for building more
-				complex Node.js applications.
+				Außerdem wollen wir nicht nur den unbedingt notwendigen Code schreiben, damit die Anwendung das tut, was wir von ihr erwarten. Egal, ob dieser Code nun besonders schlank, elegant und korrekt ist. Wir wollen absichtlich etwas mehr Abstraktion als nötig einbauen, um ein Gefühl dafür zu kommen, wie man komplexe Node.js Anwendungen konzipiert und programmiert.
 			</p>
 
-			<h3>The application stack</h3>
+			<h3>Der Anwenungsaufbau</h3>
 			<p>
-				Let's dissect our application. Which parts need to be
-				implemented in order to fulfill the use cases?
+				Zerlegen wir mal unsere Anwendung. Welche Teilbereiche sind nötig, damit wir am Ende unseren Anwendungsfall voll abdecken?
 			</p>
 			<ul>
 				<li>
-					We want to serve web pages, therefore we need an
-					<strong>HTTP server</strong>
+					Wir wollen Webseiten ausliefern, also benötigen wir einen <strong>HTTP server</strong>
 				</li>
 				<li>
-					Our server will need to answer differently to
-					requests, depending on which URL the request was
-					asking for, thus we need some kind of
-					<strong>router</strong> in order to map requests
-					to request handlers
+					Unser Server soll auf unterschiedliche Anfragen gezielt reagieren, je nachdem welche URL aufgerufen wurde. Also benötigen wir soetwas wie einen <strong>Router</strong> um Anfragen gezielt beantworten zu können.
 				</li>
 				<li>
-					To fullfill the requests that arrived at the server
-					and have been routed using the router, we need
-					actual <strong>request handlers</strong>
+					Um die Anfragen an den Server zu beantworten, die durch den Router ausgewertet wurden, benötigen wir <strong>Request Handler</strong>
 				</li>
 				<li>
-					The router probably should also treat any incoming
-					POST data and give it to the request handlers in
-					a convenient form, thus we need <strong>request
-					data handling</strong>
+					Der Router muss möglicherweise auch Daten verarbeiten, die via POST gesendet werden und diese an den Request Handler weiterreichen. Dazu benötigen wir das <strong>Request Data Handling.</strong>
 				</li>
 				<li>
-					We not only want to handle requests for URLs, we
-					also want to display content when these URLs are
-					requested, which means we need some kind of
-					<strong>view logic</strong> the request handlers
-					can use in order to send content to the user's
-					browser
+					Wir möchten aber nicht nur auf Anfragen reagieren, sondern auch Inhalte darstellen, wenn die dazugehörigen URLs aufgerufen werden. Also benötigen wir auch eine irgendwie geartete <strong>View Logik</strong>, welche von den Request Handlern dazu verwendet werden kann, Informationen an den Benutzer zu senden.
 				</li>
 				<li>
-					Last but not least, the user will be able to upload
-					images, so we are going to need some kind of
-					<strong>upload handling</strong> which takes care of
-					the	details
+					Zu guter letzt soll der Benutzer Bilder hochladen können, also benötigen wir auch ein <strong>Upload Handling</strong>, welches sich um die Abwicklung kümmert.
 				</li>
 			</ul>
 			<p>
-				Let's think a moment about how we would build this stack
-				with PHP. It's not exactly a secret that the typical setup
-				would be an Apache HTTP server with mod_php5 installed.
-				<br/>
-				Which in turn means that the whole "we need to be able to
-				serve web pages and receive HTTP requests" stuff doesn't
-				happen within PHP itself.
+				Denken wir mal kurz darüber nach, wie wir diese Anforderungen mit PHP umsetzen würden. Es ist sicherlich kein Geheimnis, dass das typische Setup dafür eine Apache HTTP Server mit mod_php5 sein dürfte.<br />
+				Was aber direkt bedeutet, dass der ganze Bereich "Wir müssen Webseiten ausliefern und auf Anfragen reagieren können" nicht mit PHP selbst zu tun hat.
 			</p>
 			<p>
-				Well, with node, things are a bit different. Because with
-				Node.js, we not only implement our application, we also
-				implement the whole HTTP server. In fact, our web
-				application	and its web server are basically the same.
+				Nun, mit Node läuft der Hase etwas anders. Denn bei Node.js bauen wir nicht nur unsere Anwendung, wir implementieren auch den gesamten Server. Genaugenommen sind also unsere Anwendung und der Server ein und dasselbe.
 			</p>
 			<p>
-				This might sound like a lot of work, but we will see in a
-				moment that with Node.js, it's not.
+				Das klingt jetzt vielleicht nach sehr viel Arbeit, aber wir werden gleich sehen, dass es mit Node.js alles andere als schwer ist.
 			</p>
 			<p>
-				Let's just start at the beginning and implement the first
-				part of our stack, the HTTP server.
+				Fangen wir also mal ganz vorne an und implementieren den ersten Teil unserer Anwendung: Den HTTP-Server.
 			</p>
 
-			<h2>Building the application stack</h2>
-			<h3>A basic HTTP server</h3>
+			<h2>Die Anwendungsteile bauen</h2>
+			<h3>Ein einfacher HTTP-Server</h3>
 			<p>
-				When I arrived at the point where I wanted to start with my
-				first "real" Node.js application, I wondered not only how to
-				actually code it, but also how to organize my code.
+				Als ich an den Punkt kam, an dem ich meine erste Node.js Anwendung schreiben wollte, fragte ich mich nicht nur, wie ich sie programmieren sollte, sondern auch, wie ich meinen Code am besten organsiere.
 				<br/>
-				Do I need to have everything in one file? Most tutorials on
-				the web that teach you how to write a basic HTTP server in
-				Node.js have all the logic in one place. What if I want to
-				make sure that my code stays readable the more stuff I
-				implement?
+				Sollte ich alles in eine Datei packen? Viele Tutorials zum Thema HTTP-Server im Web sagen einem, alles in eine Datei zu packen.
+				Was aber, wenn ich meinen Code übersichtlich halten möchte, auch wenn ich jede Menge Zeug reinpacke?
 			</p>
 			<p>
-				Turns out, it's relatively easy to keep the different
-				concerns of your code separated, by putting them in
-				modules.
+				Wie sich herausstellte, ist es sehr einfach, die verschiedenen Bereiche suaber zu trennen, indem man sie in Module verpackt.
 			</p>
 			<p>
-				This allows you to have a clean main file, which you
-				execute with Node.js, and clean modules that can be used by
-				the main file and among each other.
+				Das stellt sicher, dass man immer eine saubere Hauptdatei hat, welche mit Node.js ausgeführt wird und saubere Module ebenso, welche nicht nur von der Hauptdatei sondern auch anderen Skripten genutzt werden können.
 			</p>
 			<p>
-				So, let's create a main file which we use to start our
-				application, and a module file where our HTTP server code
-				lives.
+				Also legen wir jetzt mal unsere Hauptdatei für unsere Anwendung an und ein Modul, welches unseren HTTP-Server enthält.
 			</p>
 			<p>
-				My impression is that it's more or less a standard to name
-				your main file <em>index.js</em>. It makes sense to put	our
-				server module into a file named <em>server.js</em>.
+				Mein Erfahrung zeigt, dass es mehr oder weniger Standard ist, die Hauptdatei <em>index.js</em> zu nennen. Den Server verpackt man am sinnigstens in der Datei <em>server.js</em>.
 			</p>
 			<p>
-				Let's start with the server module. Create the file
-				<em>server.js</em> in the root directory of your project,
-				and fill it with the following code:
+				Fangen wir mit dem Server-Modul an. Erstellen Sie die Datei <em>server.js</em> im Hauptverzeichnis Ihres Projekts. Schreiben Sie dann in diese Datei folgenden Code:
 			</p>
 <pre class="prettyprint lang-js">var http = require("http");
 
 http.createServer(function(request, response) {
   response.writeHead(200, {"Content-Type": "text/plain"});
-  response.write("Hello World");
+  response.write("Hallo Welt");
   response.end();
 }).listen(8888);
 </pre>
 			<p>
-				That's it! You just wrote a working HTTP server. Let's
-				prove it by running and testing it. First, execute your
-				script with Node.js:
+				Das wars! Sie haben soeben einen funktionstüchtigen Server geschrieben. Testen wir das Ganze! Zuerst führen Sie das Skript mit Node.js aus:
 			</p>
 <pre>node server.js</pre>
 			<p>
-				Now, open your browser and point it at
-				<a href="http://localhost:8888/" rel="nofollow">http://localhost:8888/</a>.
-				This should display a web page that says "Hello World".
+				Nun starten Sie Ihren Browser und öffnen Sie <a href="http://localhost:8888/" rel="nofollow">http://localhost:8888/</a>.
+				Jetzt sollte auf Ihrem Bildschirm eine Webseite mit der bekannten "Hallo Welt"-Anzeige erscheinen.
 			</p>
 			<p>
-				That's quite interesting, isn't it. How about talking about
-				what's going on here and leaving the question of how to
-				organize our project for later? I promise we'll get back to
-				it.
+				Das ist doch toll, oder nicht? Schauen wir uns doch mal im Detail an, was hier genau abläuft und heben wir uns die Frage nach der Organisation des Codes für später auf. Ich verspreche, wir kommen nochmal drauf zurück!
 			</p>
 
-			<h3>Analyzing our HTTP server</h3>
+			<h3>Analyse unseres HTTP Servers</h3>
 			<p>
 				Well, then, let's analyze what's actually going on here.
 			</p>
