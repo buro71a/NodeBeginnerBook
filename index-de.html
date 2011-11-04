@@ -839,113 +839,71 @@ http.createServer(onRequest).listen(8888);
 				Bei PHP Anwendung stört uns das nicht: wann auch immer eine Anfrage an unserem HTTP Server ankommt, erzeugt der Webserver (normalerweise der Apache) einen neuen Prozess für dieses einen Aufruf und startet das entsprechende PHP Skript, welches dann von oben nach unten durchläuft.
 			</p>
 			<p>
-				So in regards of control flow, we are in the midst of our
-				Node.js program when a new request arrives at port 8888 - how
-				to handle this without going insane?
+				In Bezug auf unseren Ablauf stecken wir mitten in unseren Node.js Programm, wenn eine Anfrage auf Port 8888 ankommt - wie sollen wir diese Anfrage nun also verarbeiten, ohne auszuflippen?
 			</p>
 			<p>
-				Well, this is where the event-driven design of
-				Node.js/JavaScript actually helps, although we need to learn
-				some new concepts in order to master it. Let's see how
-				these concepts are applied in our server code.
+				Naja, das ist genau der Moment, in dem uns das ereignisbasierte Design von Node.js/JavaScript hilft, obwohl wir uns erstmal mit neuen Konzepten vertraut machen müssen, damit wir das auch in den Griff bekommen. Schauen wir uns mal an, wo sich diese Konzepte in unserem Servercode wiederfinden.
 			</p>
 			<p>
-				We create the server, and pass a function to the method
-				creating it. Whenever our server receives a request, the
-				function we passed will be called.
+				Wir erstellen den Server und übergeben der entsprechenden Methode eine Funktion. Jedes mal also, wenn unseren Server eine Anfrage erreicht, wird diese Funktion ausgeführt.
 			</p>
 			<p>
-				We don't know when this is going to happen, but we now have
-				a place where we can handle an incoming request. It's our
-				passed function, no matter if we first defined it or passed
-				it anonymously.
+				Wir wissen zwar nicht, <strong>wann</strong> genau das passiert, aber wir haben nun eine Stelle im Code, an der wir unsere ankommende Anfrage verarbeiten können. Es handelt sich genau um die übergebene Funktion, egal ob diese Funktion vorher schon erstellt wurde oder als anonyme Funktion einfach übergeben wird.
 			</p>
 			<p>
-				This concept is called a <em>callback</em>. We pass into
-				some method a function, and the method uses this function
-				to <em>call back</em> if an event related to the method
-				occurs.
+				Dieses Konzept nennt man <em>callback</em>. Wir übergeben eine Funktion an eine Methode und die Methode verwendet unsere Funktion als <em>call back</em>, wenn ein Ereignis passend zu dieser Methode auftritt.
 			</p>
 			<p>
-				At least for me, this took some time to understand. Just
-				read Felix' blog post again if you are still unsure.
+				Zumindest mich hat es einige Zeit gekostet, das zu verstehen. Wenn Sie sich immer noch unsicher sind, lesen Sie Felix Blogeintrag einfach nochmal.
 			</p>
 			<p>
-				Let's play around a bit with this new concept. Can we prove
-				that our code continues after creating the server, even if
-				no HTTP request happened and the callback function we
-				passed isn't called? Let's try it:
+				Spielen wir also mal ein bisschen mit diesem neuen Konzept.
+				Let's play around a bit with this new concept. Testen wir mal, ob unser Code nach der Erstellung des Servers weiterläuft, auch wenn er keine HTTP-Anfrage erhält und somit die von uns übergebene Callback-Funktion nicht aufgerufen wird:
 			</p>
 <pre class="prettyprint lang-js">var http = require("http");
 
 function onRequest(request, response) {
-  console.log("Request received.");
+  console.log("Anfrage erhalten.");
   response.writeHead(200, {"Content-Type": "text/plain"});
-  response.write("Hello World");
+  response.write("Hallo Welt");
   response.end();
 }
 
 http.createServer(onRequest).listen(8888);
 
-console.log("Server has started.");
+console.log("Server wurde gestartet.");
 </pre>
 			<p>
-				Note that I use <em>console.log</em> to	output a text whenever
-				the <em>onRequest</em> function (our callback) is triggered,
-				and	another text right <em>after</em> starting the HTTP server.
+				Ich lasse mir einen Text über <em>console.log()</em> ausgeben, sobald die <em>onRequest</em> Funktion (unser Callback) ausgeführt wird und einen weiteren Text direkt <em>nach</em> Starten des HTTP Servers.
 			</p>
 			<p>
-				When we start this (<em>node server.js</em>, as always), it
-				will immediately output "Server has started." on the
-				command line. Whenever we request our server (by opening
-				<a href="http://localhost:8888/" rel="nofollow">http://localhost:8888/</a>
-				in our browser), the message "Request received." is printed
-				on the command line.
+				Wenn wir diesen Code ausführen (<em>node server.js</em>, wie immer), erscheint auf der Konsole sofort "Server wurde gestartet." Jedes Mal, wenn wir unseren Server aufrufen (durch Öffnen von <a href="http://localhost:8888/" rel="nofollow">http://localhost:8888/</a> im Browser), erscheint die Meldung "Anfrage erhalten." auf der Kommandozeile.
 			</p>
 			<p>
-				Event-driven asynchronous server-side JavaScript with
-				callbacks in action :-)
+				Ereignisbasiertes, asynchrones, serverseitiges JavaScript mit Callbacks - voll in Aktion :-)
 			</p>
 			<p>
-				(Note that our server will probably write "Request received."
-				to STDOUT two times upon opening the page in a browser. That's
-				because most browser will try to load the favicon by requesting
-				http://localhost:8888/favicon.ico whenever you open
-				http://localhost:8888/).
+				(Kleiner Hinweis am Rande: Es kann sein, dass die Meldung "Anfrage erhalten." zweimal auf der Konsole auftaucht, wenn wir die Anfrage im Browser abschicken.  Das liegt daran, dass viele Browser automatisch versuchen, ein Favicon unter http://localhost:8888/favicon.ico zu laden, wenn Sie http://localhost:8888/ öffnen).
 			</p>
 
-			<h3>How our server handles requests</h3>
+			<h3>Wie unser Server Anfragen verarbeitet</h3>
 			<p>
-				Ok, let's quickly analyze the rest of our server code, that
-				is, the body of our callback function <em>onRequest()</em>.
+				Okay, gehen wir mal eben noch schnell über den Rest unseres Servercodes - der Inhalt unserer Callback-Funktion <em>onRequest()</em>.
 			</p>
 			<p>
-				When the callback fires and our <em>onRequest()</em> function
-				gets triggered, two parameters are passed into it:
-				<em>request</em> and <em>response</em>.
+				Wenn das Callback ausgelöst und unsere <em>onRequest()</em> Funktion ausgeführt wird, werden zwei Parameter übergeben: <em>request</em> und <em>response</em>.
 			</p>
 			<p>
-				Those are objects, and you can use their methods to handle
-				the	details of the HTTP request that occured and to respond
-				to the request (i.e., to actually send something over
-				the wire back to the browser that requested your server).
+				Diese beiden sind Objekte. Sie können deren Methoden verwenden, um die Anfrage zu verarbeiten und eine Antwort (beispielsweise Daten an den anfragenden Browser) auf die Anfrage zu senden.
 			</p>
 			<p>
-				And our code does just that: Whenever a request is
-				received, it uses the <em>response.writeHead()</em>
-				function to send an HTTP status 200 and content-type in the
-				HTTP response header, and the <em>response.write()</em>
-				function to send the text "Hello World" in the HTTP
-				response body.
+				Und unser Code macht genau das: Jedes Mal, wenn unser Server eine Anfrage erhält, wird über die Funktion <em>response.writeHead()</em> ein HTTP Status 200 Header und ein Content-Type im HTTP Header zurückgegeben. Mit der <em>response.write()</em> Funktion wird anschließend noch der Text "Hallo Welt" im HTTP Body ausgegeben.
 			</p>
 			<p>
-				At last, we call <em>response.end()</em> to actually finish
-				our response.
+				Zu guter letzt beenden wir unsere Antwort mit der <em>response.end()</em> Funktion.
 			</p>
 			<p>
-				At this point, we don't care for the details of the
-				request, which is why we don't use the <em>request</em>
-				object at all.
+				An dieser Stelle wollen wir uns mal noch nicht im Detail um die Anfrage kümmern, daher verwenden wir das <em>request</em> Objekt überhaupt nicht.
 			</p>
 
 
