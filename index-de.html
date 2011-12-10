@@ -857,8 +857,7 @@ http.createServer(onRequest).listen(8888);
 				Zumindest mich hat es einige Zeit gekostet, das zu verstehen. Wenn Sie sich immer noch unsicher sind, lesen Sie Felix Blogeintrag einfach nochmal.
 			</p>
 			<p>
-				Spielen wir also mal ein bisschen mit diesem neuen Konzept.
-				Let's play around a bit with this new concept. Testen wir mal, ob unser Code nach der Erstellung des Servers weiterläuft, auch wenn er keine HTTP-Anfrage erhält und somit die von uns übergebene Callback-Funktion nicht aufgerufen wird:
+				Spielen wir also mal ein bisschen mit diesem neuen Konzept. Testen wir mal, ob unser Code nach der Erstellung des Servers weiterläuft, auch wenn er keine HTTP-Anfrage erhält und somit die von uns übergebene Callback-Funktion nicht aufgerufen wird:
 			</p>
 <pre class="prettyprint lang-js">var http = require("http");
 
@@ -907,24 +906,15 @@ console.log("Server wurde gestartet.");
 			</p>
 
 
-			<h3>Finding a place for our server module</h3>
+			<h3>Ein Zuhause für unseren Server</h3>
 			<p>
-				Ok, I promised we will get back to how to organize our
-				application. We have the code for a very basic HTTP server in
-				the file <em>server.js</em>, and I mentioned that it's common
-				to have a main file called <em>index.js</em> which is used
-				to bootstrap and start our application by making use of the
-				other modules of the application (like the HTTP server module
-				that lives in <em>server.js</em>).
+				Okay, ich habe versprochen, dass wir nochmal auf die Organisation unserer Anwendung zurückkommen. Wir haben den Code für unseren rudimentären HTTP-Server im der Datei <em>server.js</em> untergebracht. Außerdem habe ich schon erwähnt, dass es allgein üblich ist, eine Hauptdatei <em>index.js</em> anzulegen, welche für den Startvorgang unserer Anwendung verwendet wird und die restlichen Module verwendet (wie das Modul für den HTTP-Server in der <em>server.js</em>).
 			</p>
 			<p>
-				Let's talk about how to make server.js a real Node.js module
-				that can be used by our yet-to-be-written <em>index.js</em>
-				main file.
+				Schauen wir doch mal, wie man aus der <em>server.js</em> ein richtiges Node.js Modul machen können, welches dann auch von unserer noch zu schreibenden <em>index.js</em> verwendet werden kann.
 			</p>
 			<p>
-				As you may have noticed, we already used modules in our code,
-				like this:
+				Vielleicht ist es schon aufgefallen: Wir nutzen bereits Module in unserem Code.
 			</p>
 <pre class="prettyprint lang-js">var http = require("http");
 
@@ -933,18 +923,13 @@ console.log("Server wurde gestartet.");
 http.createServer(...);
 </pre>
 			<p>
-				Somewhere within Node.js lives a module called "http", and we can
-				make use of it in our own code by requiring it and assigning
-				the result of the require to a local variable.
+				Irgendwo in Node.js gibt es bereits ein "http" Modul, das wir unserem eigenen Code durch einen Aufruf und die Zuweisung des Ergebnisses zu einer lokalen Variablen verwenden können.
 			</p>
 			<p>
-				This makes our local variable an object that carries all the
-				public methods the <em>http</em> module provides.
+				Damit enthält unsere lokale Variable ein Objekt, das alle öffentlichen Methoden des <em>http</em> Moduls unterstützt.
 			</p>
 			<p>
-				It's common practice to choose the name of the module for the
-				name of the local variable, but we are free to choose whatever
-				we like:
+				Es ist allgemein üblich, den Namen der lokalen Variablen dem Modulnamen anzupassen. Grundsätzlich können wir den Variablennamen aber frei wählen:
 			</p>
 <pre class="prettyprint lang-js">var foo = require("http");
 
@@ -953,65 +938,52 @@ http.createServer(...);
 foo.createServer(...);
 </pre>
 			<p>
-				Fine, it's clear how to make use of internal Node.js modules. How
-				do we create our own modules, and how do we use them?
+				Okay, wie wir bestehende, interne Module von Node.js nutzen ist klar. Wie aber können wir nun eigene Module anlegen und verwenden?
 			</p>
 			<p>
-				Let's find out by turning our <em>server.js</em> script into a
-				real module.
+				Machen wir also einfach mal aus unserem <em>server.js</em> Skript ein echtes Modul.
 			</p>
 			<p>
-				Turns out, we don't have to change that much. Making some code
-				a module means we need to <em>export</em> those parts of its
-				functionality that we want to provide to scripts that require
-				our module.
+				Wie sich gleich zeigen wird, ist dazu gar nicht so viel nötig: Aus Code ein echtes Modul machen bedeutet lediglich, dass wir die Teile des Skripts <em>exportieren</em> müssen, die wir anderen Skripten zur Verfügung stellen möchten, die unser Modul aufrufen.
 			</p>
 			<p>
-				For now, the functionality our HTTP server needs to export is
-				simple: scripts requiring our server module simply need to
-				start the server.
+				Für den Anfang ist die zu exportierende Funktionalität unserer Servers recht einfach: Skripte, die unser Servermodul aufrufen, wollen einen Server starten.
+				
 			</p>
 			<p>
-				To make this possible, we will put our server code into a
-				function named <em>start</em>, and we will export this
-				function:
+				Um das zu ermöglichen, verpacken wir unseren Servercode in eine neue Funktion namens <em>start</em>, und diese Funktion exportieren wir:
 			</p>
 <pre class="prettyprint lang-js">var http = require("http");
 
 function start() {
   function onRequest(request, response) {
-    console.log("Request received.");
+    console.log("Anfrage erhalten.");
     response.writeHead(200, {"Content-Type": "text/plain"});
-    response.write("Hello World");
+    response.write("Hallo Welt!");
     response.end();
   }
 
   http.createServer(onRequest).listen(8888);
-  console.log("Server has started.");
+  console.log("Server wurde gestartet.");
 }
 
 exports.start = start;
 </pre>
 			<p>
-				This way, we can now create our main file <em>index.js</em>,
-				and start our HTTP there, although the code for the server is
-				still in our <em>server.js</em> file.
+				Jetzt können wir unsere Hauptdatei <em>index.js</em> erstellen und darin unseren HTTP-Server starten, obwohl der Code für unseren Server immernoch in der <em>server.js</em> Datei steht.
 			</p>
 			<p>
-				Create a file <em>index.js</em> with the following content:
+				Erstellen wir jetzt mal die <em>index.js</em> mit folgendem Inhalt:
 			</p>
 <pre class="prettyprint lang-js">var server = require("./server");
 
 server.start();
 </pre>
 			<p>
-				As you can see, we can use our server module just like any
-				internal module: by requiring its file and assigning it to
-				a variable, its exported functions become available to us.
+				Wie Sie sehen können, können wir unser eigenes Modul genauso aufrufen, wie ein internes Modul: Einfach die Datei aufrufen und das Ergebnis einer Variable zuweisen. Damit können wir nun auf die Methoden dieses Objekts zugreifen.
 			</p>
 			<p>
-				That's it. We can now start our app via our main script, and it
-				still does exactly the same:
+				Das ist schon alles. Jetzt können wir unseren Server über das Hauptskritp starten und es funktioniert immer noch alles, wie vorher:
 			</p>
 <pre>node index.js</pre>
 			<p>
